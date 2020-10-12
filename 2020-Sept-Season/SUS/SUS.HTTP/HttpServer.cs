@@ -70,7 +70,7 @@ namespace SUS.HTTP
                             && x.Method == request.Method);
                     if (route != null)
                     {
-                        response = route.Action(request);
+                        response = route.Action(request); // това сработва на практика при един request
                     }
                     else
                     {

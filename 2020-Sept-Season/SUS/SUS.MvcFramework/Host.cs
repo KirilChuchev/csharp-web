@@ -62,8 +62,8 @@ namespace SUS.MvcFramework
                     {
                         url = attribute.Url;
                     }
-
-                    routeTable.Add(new Route(url, httpMethod, (request) =>
+                                                                                // AutoRegisterRoutes() на практика създава route-ове от наличните контролери (по папките)
+                    routeTable.Add(new Route(url, httpMethod, (request) =>      // тук задаваме автоматично всеки route, който ще се изпълни в HTTPServer-a при request на съответния path
                     {
                         var instance = Activator.CreateInstance(controllerType) as Controller;
                         instance.Request = request;
