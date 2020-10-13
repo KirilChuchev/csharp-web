@@ -14,7 +14,7 @@ namespace BattleCards.Controllers
     public class CardsController : Controller
     {
         // GET /cards/add
-        public HttpResponse Add()
+       public HttpResponse Add()
         {
             return this.View();
         }
@@ -63,6 +63,57 @@ namespace BattleCards.Controllers
         // /cards/collection
         public HttpResponse Collection()
         {
+            var db = new ApplicationDbContext();
+            var cardsViewModel = db.Cards.Select(x => new CardViewModel
+            {
+                Name = x.Name,
+                Description = x.Description,
+                Attack = x.Attack,
+                Health = x.Health,
+                ImageUrl = x.ImageUrl,
+                Type = x.Keyword,
+            }).ToList();
+
+            return this.View(new AllCardsViewModel { Cards = cardsViewModel });
+        }
+
+        [HttpPost("/Cards/SelectCard")]
+        public HttpResponse DoSelectCard()
+        {
+            var health = int.Parse(this.Request.FormData["health"]);
+            Console.WriteLine(health);
+            var db = new ApplicationDbContext();
+            var cards = db.Cards.Where(x => x.Health > health).Select(x => new CardViewModel()
+            {
+                Name = x.Name,
+                ImageUrl = x.ImageUrl,
+                Description = x.Description,
+                Type = x.Keyword,
+                Attack = x.Attack,
+                Health = x.Health
+            }).ToList();
+
+            //var selectedCards = new List<CardViewModel>();
+            //foreach (var card in cards)
+            //{
+            //    var currentCard = new CardViewModel()
+            //    {
+            //        Name = card.Name,
+            //        ImageUrl = card.ImageUrl,
+            //        Description = card.Description,
+            //        Type = card.Keyword,
+            //        Attack = card.Attack,
+            //        Health = card.Health
+            //    };
+            //    selectedCards.Add(currentCard);
+            //}
+            
+            return this.Redirect("/Cards/DoSelectedCard");
+        }
+
+        public HttpResponse SelectCard()
+        {
+            
             return this.View();
         }
     }

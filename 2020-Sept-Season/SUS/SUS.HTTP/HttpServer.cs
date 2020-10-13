@@ -23,6 +23,7 @@ namespace SUS.HTTP
             TcpListener tcpListener =
                 new TcpListener(IPAddress.Loopback, port);
             tcpListener.Start();
+           Console.WriteLine("Server is working...");
             while (true)
             {
                 TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();

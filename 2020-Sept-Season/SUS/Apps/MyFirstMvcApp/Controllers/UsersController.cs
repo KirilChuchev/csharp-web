@@ -26,5 +26,10 @@ namespace BattleCards.Controllers
             // TODO: log user
             return this.Redirect("/");
         }
+
+        public HttpResponse Logout()
+        {
+            return this.Redirect("/Users/Login");
+        }
     }
 }
